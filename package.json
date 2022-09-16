@@ -1,0 +1,50 @@
+{
+  "name": "@layerhub-io/renderer",
+  "version": "1.0.0",
+  "main": "src/app.ts",
+  "type": "module",
+  "license": "MIT",
+  "scripts": {
+    "start": "node --experimental-specifier-resolution=node dist",
+    "dev": "node --experimental-specifier-resolution=node --loader ts-node/esm.mjs src/index.ts",
+    "example": "node --experimental-specifier-resolution=node --loader ts-node/esm.mjs src/example.ts",
+    "build": "tsc"
+  },
+  "dependencies": {
+    "@types/cors": "^2.8.12",
+    "@types/express": "^4.17.13",
+    "@types/fabric": "^4.5.6",
+    "@types/fs-extra": "^9.0.13",
+    "@types/gl": "^4.1.0",
+    "@types/gl-texture2d": "^2.1.4",
+    "@types/lodash": "^4.14.178",
+    "@types/ndarray": "^1.0.11",
+    "@types/node": "^17.0.7",
+    "aws-sdk": "^2.1196.0",
+    "canvas": "^2.8.0",
+    "canvas-5-polyfill": "^0.1.5",
+    "compare-versions": "^4.1.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.1",
+    "execa": "^6.0.0",
+    "express": "^4.17.2",
+    "fabric": "^4.6.0",
+    "file-url": "^4.0.0",
+    "fs-extra": "^10.0.0",
+    "gl": "^5.0.0",
+    "gl-buffer": "^2.1.2",
+    "gl-texture2d": "^2.1.0",
+    "gl-transition": "^1.13.0",
+    "gl-transitions": "^1.43.0",
+    "lodash": "^4.17.21",
+    "mime": "^3.0.0",
+    "nanoid": "^3.3.4",
+    "ndarray": "^1.0.19",
+    "p-map": "^5.3.0",
+    "ts-node": "^10.4.0",
+    "typescript": "^4.5.4"
+  },
+  "devDependencies": {
+    "@types/mime": "^3.0.1"
+  }
+}
