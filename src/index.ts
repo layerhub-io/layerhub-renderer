@@ -8,12 +8,16 @@ import aws from "./services/aws"
 const app = Express()
 
 app.use(cors())
+
 app.use(Express.json())
+
+app.get("/", (req, res) => {
+  res.send("Running")
+})
 
 app.post("/render", async (req, res) => {
   try {
     const template = req.body
-    console.log({ template: req.body })
     const renderer = new VideoRenderer(template)
     renderer
       .render()

@@ -20,9 +20,8 @@ function parseFps(fps: any) {
 
 interface VideoRendererOptions {
   dimension: Dimension
-  outPath: string
   duration: number
-  clips: any[]
+  scenes: any[]
   verbose: boolean
   fps: number
 }
@@ -40,9 +39,7 @@ class VideoRenderer {
   public render = async () => {
     const {
       verbose = false,
-      outPath,
-      clips: clipsIn,
-      // fps,
+      scenes: clipsIn,
       dimension: { width, height },
     } = this.options
 
@@ -63,9 +60,8 @@ class VideoRenderer {
     let firstVideoHeight
     let firstVideoFramerateStr
 
-    let toClipFrameAt = 0;
+    let toClipFrameAt = 0
 
-    
     clips.find(
       (clip) =>
         clip &&
@@ -81,7 +77,6 @@ class VideoRenderer {
         })
     )
 
-    // console.log({ clips })
     let fps: any
     let framerateStr: any
 
@@ -102,7 +97,6 @@ class VideoRenderer {
       },
     })
     const getTransitionFromClip = () => {
-      // console.log({ transitionFromClipId })
       return clips[transitionFromClipId]
     }
 
@@ -120,40 +114,27 @@ class VideoRenderer {
       })
     }
 
-    const getTransitionToClipId = () => transitionFromClipId + 1;
+    const getTransitionToClipId = () => transitionFromClipId + 1
 
-    const getTransitionToClip = () => clips[getTransitionToClipId()];
+    const getTransitionToClip = () => clips[getTransitionToClipId()]
     const getTransitionFromSource = async () => getSource(getTransitionFromClip(), transitionFromClipId)
-    const getTransitionToSource = async () => (getTransitionToClip() && getSource(getTransitionToClip(), getTransitionToClipId()));
+    const getTransitionToSource = async () =>
+      getTransitionToClip() && getSource(getTransitionToClip(), getTransitionToClipId())
 
     console.log(`${width}x${height} ${fps}fps`)
     try {
       frameSource1 = await getTransitionFromSource()
-      frameSource2 = await getTransitionToSource();
+      frameSource2 = await getTransitionToSource()
 
       while (true) {
         const transitionFromClip = getTransitionFromClip()
-        // console.log({
-        //   a:
-        //   b: transitionFromClip.duration,
-        // })
-        // total frames
         const fromClipNumFrames = Math.round(transitionFromClip.duration * fps)
-       //console.log(fromClipNumFrames)
-        // current time
         const fromClipProgress = fromClipFrameAt / fromClipNumFrames
         const fromClipTime = transitionFromClip.duration * fromClipProgress
-
-        // Each clip has two transitions, make sure we leave enough room:
         const transitionNumFramesSafe = 0
-        // How many frames into the transition are we? negative means not yet started
-        console.log(fromClipFrameAt ,fromClipNumFrames, transitionNumFramesSafe)
-
+        console.log(fromClipFrameAt, fromClipNumFrames, transitionNumFramesSafe)
         const transitionFrameAt = fromClipFrameAt - (fromClipNumFrames - transitionNumFramesSafe)
-       // console.log(transitionFrameAt)
         const transitionLastFrameIndex = transitionNumFramesSafe
-        // Done with transition?
-     
         if (transitionFrameAt >= transitionLastFrameIndex) {
           transitionFromClipId += 1
           console.log(`Done with transition, switching to next transitionFromClip (${transitionFromClipId})`)
@@ -161,13 +142,13 @@ class VideoRenderer {
             console.log("No more transitionFromClip, done")
             break
           }
-          await frameSource1.close();
-          frameSource1 = frameSource2;
-          frameSource2 = await getTransitionToSource();
-  
-          fromClipFrameAt = transitionLastFrameIndex;
-          toClipFrameAt = 0;
-  
+          await frameSource1.close()
+          frameSource1 = frameSource2
+          frameSource2 = await getTransitionToSource()
+
+          fromClipFrameAt = transitionLastFrameIndex
+          toClipFrameAt = 0
+
           continue
         }
 
@@ -213,7 +194,7 @@ class VideoRenderer {
   }
 
   public createTempDir = async () => {
-    const outPath = this.options.outPath
+    const outPath = "./position.mp4"
     const outDir = dirname(outPath)
     const tmpDir = join(outDir, `renderer-tmp-${nanoid()}`)
     await fs.mkdirp(tmpDir)
