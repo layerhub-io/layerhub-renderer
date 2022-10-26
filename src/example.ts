@@ -1,10 +1,90 @@
 import VideoRenderer from "./video-renderer"
 
+const options2 = {
+  id: "6LqIseL6svLDybdMzv7LM",
+  type: "VIDEO",
+  name: "Untitled Design",
+  frame: { width: 1200, height: 1200 },
+  // duration: 20,
+  fps: 25,
+  scenes: [
+    {
+      id: "1dPxLYXMiSFTNDvOa3jpr",
+      duration: 3.2325,
+      layers: [
+        {
+          id: "background",
+          name: "Initial Frame",
+          angle: 0,
+          stroke: null,
+          strokeWidth: 0,
+          left: 0,
+          top: 0,
+          width: 1200,
+          height: 1200,
+          opacity: 1,
+          originX: "left",
+          originY: "top",
+          scaleX: 1,
+          scaleY: 1,
+          type: "Background",
+          flipX: false,
+          flipY: false,
+          skewX: 0,
+          skewY: 0,
+          visible: true,
+          shadow: {
+            color: "#fcfcfc",
+            blur: 4,
+            offsetX: 0,
+            offsetY: 0,
+            affectStroke: false,
+            nonScaling: false,
+          },
+          fill: "#ffffff",
+          metadata: {},
+        },
+        {
+          id: "852399",
+          name: "StaticVideo",
+          angle: 0,
+          stroke: null,
+          strokeWidth: 0,
+          left: 0,
+          top: 0,
+          width: 1280,
+          height: 720,
+          opacity: 1,
+          originX: "left",
+          originY: "top",
+          scaleX: 0.94,
+          scaleY: 0.94,
+          type: "StaticVideo",
+          flipX: false,
+          flipY: false,
+          skewX: 0,
+          skewY: 0,
+          visible: true,
+          shadow: null,
+          preview: "blob:http://localhost:5173/f623c7c6-7e4a-40c5-bbe8-df88156a32cf",
+          duration: 3.2325,
+          src: "https://player.vimeo.com/external/123487794.hd.mp4?s=4f76fc2a325e0e90320b25e6e12941406190c7e3&profile_id=113&oauth2_token_id=57447761",
+          metadata: {},
+          speedFactor: 1,
+          cut: { from: 9.8218, to: 13.0543 },
+        },
+      ],
+      name: "Untitled design",
+    },
+  ],
+  metadata: {},
+  previews: [],
+}
+
 const options = {
-  verbose: false,
   duration: 10,
   fps: 25,
-  dimension: {
+  frame: {
     width: 1200,
     height: 1200,
   },
@@ -123,10 +203,10 @@ const options = {
     },
   ],
 }
+// @ts-ignore
+const renderer = new VideoRenderer(options2)
 
-const renderer = new VideoRenderer(options)
-
-console.log(JSON.stringify(options))
+// console.log(JSON.stringify(options2))
 
 renderer
   .render()

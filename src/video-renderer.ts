@@ -4,8 +4,10 @@ import { nanoid } from "nanoid"
 import parseConfig from "./parse-config"
 import createFrameSource from "./sources/frameSource"
 import FFmpeg from "./ffmpeg"
-import { Dimension } from "./interfaces/common"
-import "./objects"
+import { IDesign } from "./types"
+import { prepareDesign } from "./prepare-design"
+import "@layerhub-io/objects"
+
 const channels = 4
 
 function parseFps(fps: any) {
@@ -18,11 +20,8 @@ function parseFps(fps: any) {
   return undefined
 }
 
-interface VideoRendererOptions {
-  dimension: Dimension
-  duration: number
-  scenes: any[]
-  verbose: boolean
+interface VideoRendererOptions extends IDesign {
+  verbose?: boolean
   fps: number
 }
 
@@ -33,14 +32,15 @@ class VideoRenderer {
   private tmpDir: string
 
   constructor(options: VideoRendererOptions) {
-    this.options = options
+    // @ts-ignore
+    this.options = prepareDesign(options)
   }
 
   public render = async () => {
     const {
       verbose = false,
       scenes: clipsIn,
-      dimension: { width, height },
+      frame: { width, height },
     } = this.options
 
     const { clips } = await parseConfig({
@@ -132,7 +132,7 @@ class VideoRenderer {
         const fromClipProgress = fromClipFrameAt / fromClipNumFrames
         const fromClipTime = transitionFromClip.duration * fromClipProgress
         const transitionNumFramesSafe = 0
-        console.log(fromClipFrameAt, fromClipNumFrames, transitionNumFramesSafe)
+        // console.log(fromClipFrameAt, fromClipNumFrames, transitionNumFramesSafe)
         const transitionFrameAt = fromClipFrameAt - (fromClipNumFrames - transitionNumFramesSafe)
         const transitionLastFrameIndex = transitionNumFramesSafe
         if (transitionFrameAt >= transitionLastFrameIndex) {

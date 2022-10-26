@@ -77,16 +77,17 @@ async function parseConfig({ clips }: any) {
                 framerateStr,
                 rotation,
               } = await readVideoFileInfo(src)
-              let { cutFrom, cutTo } = layer
-              if (!cutFrom) cutFrom = 0
-              cutFrom = Math.max(cutFrom, 0)
-              cutFrom = Math.min(cutFrom, fileDuration)
+              let { cut } = layer
 
-              if (!cutTo) cutTo = fileDuration
-              cutTo = Math.max(cutTo, cutFrom)
-              cutTo = Math.min(cutTo, fileDuration)
+              if (!cut.from) cut.from = 0
+              cut.from = Math.max(cut.from, 0)
+              cut.from = Math.min(cut.from, fileDuration)
 
-              const inputDuration = cutTo - cutFrom
+              if (!cut.to) cut.to = fileDuration
+              cut.to = Math.max(cut.to, cut.from)
+              cut.to = Math.min(cut.to, fileDuration)
+
+              const inputDuration = cut.to - cut.from
 
               const isRotated = rotation === 90 || rotation === 270
               const inputWidth = isRotated ? heightIn : widthIn
@@ -94,10 +95,7 @@ async function parseConfig({ clips }: any) {
 
               return {
                 ...layer,
-                cut: {
-                  from: cutFrom,
-                  to: cutTo,
-                },
+                cut,
                 duration: inputDuration,
                 framerateStr,
                 inputWidth,

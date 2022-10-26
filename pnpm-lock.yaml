@@ -1,6 +1,8 @@
 lockfileVersion: 5.4
 
 specifiers:
+  '@layerhub-io/objects': ^0.2.0
+  '@layerhub-io/types': ^0.3.0
   '@types/cors': ^2.8.12
   '@types/express': ^4.17.13
   '@types/fabric': ^4.5.6
@@ -36,6 +38,8 @@ specifiers:
   typescript: ^4.5.4
 
 dependencies:
+  '@layerhub-io/objects': 0.2.0_fabric@4.6.0
+  '@layerhub-io/types': 0.3.0
   '@types/cors': 2.8.12
   '@types/express': 4.17.13
   '@types/fabric': 4.5.11
@@ -99,6 +103,19 @@ packages:
     dependencies:
       '@jridgewell/resolve-uri': 3.1.0
       '@jridgewell/sourcemap-codec': 1.4.14
+    dev: false
+
+  /@layerhub-io/objects/0.2.0_fabric@4.6.0:
+    resolution: {integrity: sha512-6PKye5SQs2fn6+4AVVZzItI746oQSipssOEYGskb0WoI33LJxXY0IPdQl48MwZVishOJ91dFoQ0MXCPKZDtX9A==}
+    peerDependencies:
+      fabric: ^5.2.1
+    dependencies:
+      fabric: 4.6.0
+      lodash: 4.17.21
+    dev: false
+
+  /@layerhub-io/types/0.3.0:
+    resolution: {integrity: sha512-GcQdBSCKeVjR8qcW/zQuucSZXxK6ub1ugCDskUcZ7rcfK/of41Sbq39G3ASMynTb/RzlrgcNa4zwIadtPBAV2Q==}
     dev: false
 
   /@mapbox/node-pre-gyp/1.0.9:
